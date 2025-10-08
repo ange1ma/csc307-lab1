@@ -46,7 +46,7 @@ const idGenerator = () => {
   return Math.round(Math.random() * 1000000);
 };
 
-console.log(idGenerator());
+// console.log(idGenerator());
 
 const findUserByName = (name) => {
   return users["users_list"].filter(
@@ -104,8 +104,9 @@ const addUser = (user) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  userToAdd.id = idGenerator().toString()
   addUser(userToAdd);
-  res.send();
+  res.status(201).send(userToAdd);
 });
 
 app.listen(port, () => {

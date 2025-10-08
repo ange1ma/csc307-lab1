@@ -46,15 +46,24 @@ const findUserByName = (name) => {
   );
 };
 
+const findUserByJob = (job) => {
+  return users["users_list"].filter(
+    (user) => user["job"] === job
+  );
+};
+
 app.get("/users", (req, res) => {
   const name = req.query.name;
-  if (name != undefined) {
-    let result = findUserByName(name);
-    result = { users_list: result };
-    res.send(result);
-  } else {
-    res.send(users);
+  const job = req.query.job;
+  let result = users["users_list"];
+  if (name !== undefined && job !== undefined) {
+    result = findUserByName(name).filter(user => user.job === job);
+  } else if (name !== undefined) {
+    result = findUserByName(name);
+  } else if (job !== undefined) {
+    result = findUserByJob(job);
   }
+  res.send({ users_list: result });
 });
 
 const findUserById = (id) =>
@@ -67,6 +76,16 @@ app.get("/users/:id", (req, res) => {
     res.status(404).send("Resource not found.");
   } else {
     res.send(result);
+  }
+});
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  let user = findUserById(id);
+  if (user === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    users.users_list = users.users_list.filter(user => user.id !== id); res.status(204).send();
   }
 });
 

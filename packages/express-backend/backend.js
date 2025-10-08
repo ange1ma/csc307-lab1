@@ -42,6 +42,12 @@ app.get("/", (req, res) => {
   res.send("Hello!");
 });
 
+const idGenerator = () => {
+  return Math.round(Math.random() * 1000000);
+};
+
+console.log(idGenerator());
+
 const findUserByName = (name) => {
   return users["users_list"].filter(
     (user) => user["name"] === name

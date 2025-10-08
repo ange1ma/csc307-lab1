@@ -45,6 +45,8 @@ function MyApp() {
       .then((res) => {
         if (res.status === 201) {
           return res.json();
+        } else {
+          console.log("No changes can be made.");
         }
       })
       .then((newPerson) => {

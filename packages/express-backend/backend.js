@@ -19,18 +19,6 @@ const idGenerator = () => {
 
 // console.log(idGenerator());
 
-const findUserByName = (name) => {
-  return users["users_list"].filter(
-    (user) => user["name"] === name
-  );
-};
-
-const findUserByJob = (job) => {
-  return users["users_list"].filter(
-    (user) => user["job"] === job
-  );
-};
-
 app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
@@ -41,9 +29,6 @@ app.get("/users", (req, res) => {
       console.log(error);
     });
 });
-
-const findUserById = (id) =>
-  users["users_list"].find((user) => user["id"] === id);
 
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
@@ -64,11 +49,6 @@ app.delete("/users/:id", (req, res) => {
     users.users_list = users.users_list.filter(user => user.id !== id); res.status(204).send();
   }
 });
-
-const addUser = (user) => {
-  users["users_list"].push(user);
-  return user;
-};
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;

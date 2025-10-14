@@ -34,15 +34,12 @@ const findUserByJob = (job) => {
 app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
-  let result = users["users_list"];
-  if (name !== undefined && job !== undefined) {
-    result = findUserByName(name).filter(user => user.job === job);
-  } else if (name !== undefined) {
-    result = findUserByName(name);
-  } else if (job !== undefined) {
-    result = findUserByJob(job);
-  }
-  res.send({ users_list: result });
+  userServices
+    .getUsers(name, job)
+    .then((users) => res.json({users_list: users}))
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 const findUserById = (id) =>

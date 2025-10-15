@@ -47,12 +47,17 @@ app.get("/users/:id", (req, res) => {
 
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"];
-  let user = findUserById(id);
-  if (user === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    users.users_list = users.users_list.filter(user => user.id !== id); res.status(204).send();
-  }
+  userServices
+    .deleteUserById(id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).send("Resource not found")
+      }
+      res.status(204).send("User deleted")
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 });
 
 app.post("/users", (req, res) => {

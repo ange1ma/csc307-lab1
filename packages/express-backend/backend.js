@@ -62,9 +62,14 @@ app.delete("/users/:id", (req, res) => {
 
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  userToAdd.id = idGenerator().toString()
-  addUser(userToAdd);
-  res.status(201).send(userToAdd);
+  userServices
+    .addUser(userToAdd)
+    .then((userToAdd) => {
+      res.status(201).send(userToAdd);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 });
 
 app.listen(port, () => {

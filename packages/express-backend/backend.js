@@ -32,12 +32,17 @@ app.get("/users", (req, res) => {
 
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
-  let result = findUserById(id);
-  if (result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
+  userServices
+    .findUserById(id)
+    .then((user) => {
+      if (!user ) {
+        res.status(404).send("Resource not found.")
+      }
+      res.send(user)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 });
 
 app.delete("/users/:id", (req, res) => {

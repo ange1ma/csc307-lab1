@@ -13,9 +13,9 @@ app.get("/", (req, res) => {
   res.send("testing mongoose :P");
 });
 
-const idGenerator = () => {
+/*const idGenerator = () => {
   return Math.round(Math.random() * 1000000);
-};
+};*/
 
 // console.log(idGenerator());
 

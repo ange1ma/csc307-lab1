@@ -8,13 +8,13 @@ function MyApp() {
 
   function removeOneCharacter(index) {
     const user = characters[index];
-    const promise = fetch(`http://localhost:8000/users/${user.id}`, {
+    const promise = fetch(`http://localhost:8000/users/${user._id}`, {
       method: "DELETE",
     });
     return promise
       .then((res) => {
         if (res.status === 204) {
-          setCharacters(characters.filter((char) => char.id !== user.id));
+          setCharacters(characters.filter((char) => char._id !== user._id));
         } else if (res.status === 404) {
           console.log("resource not found");
         } else {
